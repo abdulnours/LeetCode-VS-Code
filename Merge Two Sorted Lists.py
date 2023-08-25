@@ -4,46 +4,49 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-
-        # Given heads of:
-        # list1
-        # list2   (both are sorted Linked lists)
-
-        # Merge both into a Sorted Linked list
-        # Return the head of the merged linked list
-
-        # STRAT:
-        # - compare list1[0] with list2[0]
-        # - compare larger node with next node in smaller list
-        # - reiterate
-
-        result = []
-        i = 0
-        j = 0
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]: #type:ignore
         
-        while i < list1.size() and j < list2.size():
-            if list1[i] < list2[j]:
-                result.next(list1[i])
-                i += 1
-            else:
-                result.next(list2[j])
-                j += 1
+        if list1 == None and list2 == None:
+            return None
 
-        return result
-    
-    def size(self):
-        '''
-        CONVINIENCE METHOD: no added functionality, only makes info more accessible
-        Returns the number of nodes in the list 
-        Takes Linear O(n) time
-        '''
+        else:
+            c1 = list1
+            n = 0
 
-        current = self.head
-        count = 0
+            while c1:
+                n += 1
+                c1 = c1.next
+            
+            c2 = list2
+            m = 0
 
-        while current:
-            count += 1
-            current = current.next_node
+            while c2:
+                m += 1
+                c2 = c2.next
 
-        return count
+            dummy = ListNode() #type:ignore
+            new_node = dummy
+
+            i = 0
+            j = 0
+            
+            #while list1 and list2:
+            while i < n and j < m:
+                if list1.val < list2.val:
+                    new_node.next = ListNode(list1.val) #type:ignore
+                    #dummy.next = new_node
+                    list1 = list1.next
+                    i += 1
+                else:
+                    new_node.next = ListNode(list2.val) #type:ignore
+                    #dummy.next = new_node
+                    list2 = list2.next
+                    j += 1
+                new_node = new_node.next
+
+            if list1:
+                new_node.next = list1
+            if list2:
+                new_node.next = list2
+
+            return dummy.next
